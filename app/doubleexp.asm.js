@@ -9,4 +9,4 @@ function Module(global) {
     return { doubleexp: doubleexp };
 }
 
-module.exports = Module(global);
+module.exports = Module;

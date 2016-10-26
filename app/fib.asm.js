@@ -13,4 +13,4 @@ function Module() {
 	return { fib: fib };
 }
 
-module.exports = Module();
+module.exports = Module;
