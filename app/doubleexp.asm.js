@@ -2,9 +2,11 @@ function Module(global) {
     "use asm";
 
     var exp = global.Math.exp;
-    function doubleExp(value) {
+    function doubleexp(value) {
         value = +value;
         return +(+exp(+value) * 2.0);
     }
-    return { doubleExp: doubleExp };
+    return { doubleexp: doubleexp };
 }
+
+module.exports = Module(global);
