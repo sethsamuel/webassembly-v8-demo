@@ -42,12 +42,13 @@ var JS = require(`./${func}.asm.js`);
 console.log('js module', js);
 console.log("START JS");
 for (var i = 0; i < arg1s.length; i++ ){
+	var js;
 	if (func === 'arrays') {
 		js = JS(window, {}, arg1s[i].concat(arg2s[i]));
 	} else {
 		js = JS(global);
 	}
-	console.time('wasm');
+	console.time('js');
 	console.log(js[func](arg1s[i], arg2s[i]));
-	console.timeEnd('wasm');
+	console.timeEnd('js');
 }
