@@ -1,5 +1,6 @@
-function MyMathModule(global) {
+function Module(global) {
     "use asm";
+
     var exp = global.Math.exp;
     function doubleExp(value) {
         value = +value;

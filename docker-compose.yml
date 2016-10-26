@@ -6,3 +6,9 @@ services:
     stdin_open: true
     volumes:
       - ./app:/app
+    volumes_from:
+      - binaryen
+  binaryen:
+    build: ../webassembly-v8
+    volumes:
+      - /usr/local/share/binaryen

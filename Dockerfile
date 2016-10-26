@@ -1,7 +1,9 @@
-FROM webassembly-v8
+FROM mhart/alpine-node:7
 
 ADD app /app
 
 WORKDIR /app
 
-CMD ["run.sh", "fib"]
+ENV PATH $PATH:/usr/local/share/binaryen/bin
+
+CMD ["./run.sh", "fib"]
