@@ -3,7 +3,7 @@ var fs = require('fs');
 var func = process.argv[2];
 var f = fs.readFileSync(`./${func}.wasm.10.s`);
 var b = new Uint8Array(f).buffer;
-console.log(b);
+// console.log(b);
 const deps = { env: {}, global : { Math: { exp : global.Math.exp } } };
 // console.log(deps.global.Math);
 var arg1s = [];
@@ -23,32 +23,28 @@ if (func === 'arrays') {
 }
 
 var m = Wasm.instantiateModule(b, {"global.Math": global.Math});
-console.log('wasm module', m);
-console.log("START WASM");
+var JS = require(`./${func}.asm.js`);
+
 for (var i = 0; i < arg1s.length; i++ ){
 	if (func === 'arrays') {
 		m = Wasm.instantiateModule(b, {"global.Math": global.Math}, arg1s[i].concat(arg2s[i]));
 	}
-	console.time('wasm');
+	console.time(`WebAssembly: ${func}(${arg1s[i]})`);
 	if (func === 'arrays') {
 		console.log(m.exports[func](arg1s[i].length));
 	} else {
 		console.log(m.exports[func](arg1s[i], arg2s[i]));
 	}
-	console.timeEnd('wasm');
-}
+	console.timeEnd(`WebAssembly: ${func}(${arg1s[i]})`);
 
-var JS = require(`./${func}.asm.js`);
-console.log('js module', js);
-console.log("START JS");
-for (var i = 0; i < arg1s.length; i++ ){
 	var js;
 	if (func === 'arrays') {
 		js = JS(window, {}, arg1s[i].concat(arg2s[i]));
 	} else {
 		js = JS(global);
 	}
-	console.time('js');
+	console.time(`Javascript: ${func}(${arg1s[i]})`);
 	console.log(js[func](arg1s[i], arg2s[i]));
-	console.timeEnd('js');
+	console.timeEnd(`Javascript: ${func}(${arg1s[i]})`);
+	console.log('\n');
 }
